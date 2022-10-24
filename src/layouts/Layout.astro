@@ -1,35 +1,50 @@
 ---
-export interface Props {
-	title: string;
-}
+import Header from '../components/Header.astro'
+import Footer from '../components/Footer.astro'
 
-const { title } = Astro.props;
+const defaultImage = new URL("social.jpg", Astro.site);
+
+const {
+  title = "Homesite", 
+  subtitle= "Mikel-Jon West", 
+  description = "The home site of Mikel-Jon (Mike) West",
+  image = defaultImage
+  } = Astro.props
 ---
 
-<!DOCTYPE html>
-<html lang="en">
-	<head>
-		<meta charset="UTF-8" />
-		<meta name="viewport" content="width=device-width" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<meta name="generator" content={Astro.generator} />
-		<title>{title}</title>
-	</head>
-	<body>
-		<slot />
-	</body>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="description" content={description} />
+
+    <!-- favicon -->
+    <link rel="icon" href="/favicon.ico" sizes="any" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/manifest.webmanifest" />
+
+    <!-- google fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;800&display=swap" rel="stylesheet">
+
+    <!-- open graph -->
+    <meta property="og:title" content={title}>
+    <meta property="og:description" content={description}>
+    <meta property="og:type" content="website">
+    <meta property="og:url" content={Astro.site}>
+    <meta property="og:image" content={image}>
+
+    <!-- page title -->
+    <title>{title} - {subtitle}</title>
+  </head>
+  <body>
+    <Header />
+    <main id="main-content">
+      <slot />
+    </main>
+    <Footer />
+  </body>
 </html>
-<style is:global>
-	:root {
-		--accent: 124, 58, 237;
-		--accent-gradient: linear-gradient(45deg, rgb(var(--accent)), #da62c4 30%, white 60%);
-	}
-	html {
-		font-family: system-ui, sans-serif;
-		background-color: #F6F6F6;
-	}
-	code {
-		font-family: Menlo, Monaco, Lucida Console, Liberation Mono, DejaVu Sans Mono,
-			Bitstream Vera Sans Mono, Courier New, monospace;
-	}
-</style>
